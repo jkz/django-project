@@ -1,0 +1,17 @@
+echo "Please enter the password for postgres"
+sudo su postgres -c "
+psql -c \"DROP DATABASE jtg_test;\";
+psql -c \"CREATE DATABASE jtg_test OWNER jtg;\""
+
+#psql -c \"DROP DATABASE jtg_jtgnet;\"
+#psql -c \"DROP DATABASE jtg_twitter;\"
+#psql -c \"DROP DATABASE jtg_facebook;\"
+#psql -c \"DROP DATABASE jtg_googleplus;\"
+#psql -c \"DROP DATABASE jtg_youtube;\"
+#psql -c \"DROP DATABASE jtg_testnet;\"
+#psql -c \"CREATE DATABASE jtg_jtgnet OWNER jtg;\"
+#psql -c \"CREATE DATABASE jtg_twitter OWNER jtg;\"
+#psql -c \"CREATE DATABASE jtg_facebook OWNER jtg;\"
+#psql -c \"CREATE DATABASE jtg_googleplus OWNER jtg;\"
+#psql -c \"CREATE DATABASE jtg_youtube OWNER jtg;\"
+#psql -c \"CREATE DATABASE jtg_testnet OWNER jtg;\""

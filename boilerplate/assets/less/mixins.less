@@ -1,0 +1,166 @@
+// for opposite side references through @@
+@left: right;
+@right: left;
+@top: bottom;
+@bottom: top;
+
+/* Mixins
+ * ***************************************/
+.position(@side, @value) when (@side = left) { left: @value; }
+.position(@side, @value) when (@side = right) { right: @value; }
+.position(@side, @value) when (@side = top) { top: @value; }
+.position(@side, @value) when (@side = bottom) { bottom: @value; }
+.padding(@side, @value) when (@side = left) { padding-left: @value; }
+.padding(@side, @value) when (@side = right) { padding-right: @value; }
+.padding(@side, @value) when (@side = top) { padding-top: @value; }
+.padding(@side, @value) when (@side = bottom) { padding-bottom: @value; }
+.margin(@side, @value) when (@side = left) { margin-left: @value; }
+.margin(@side, @value) when (@side = right) { margin-right: @value; }
+.margin(@side, @value) when (@side = top) { margin-top: @value; }
+.margin(@side, @value) when (@side = bottom) { margin-bottom: @value; }
+
+// Clearfix
+// --------
+// For clearing floats like a boss h5bp.com/q
+.clearfix {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.styleless-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.float-list(@side: left) {
+    .styleless-list;
+    li {
+        float: @side;
+    }
+    .clearfix;
+}
+
+
+// Grid System
+// -----------
+
+// Centered container element
+.container-fixed() {
+  margin-left: auto;
+  margin-right: auto;
+  .clearfix;
+}
+
+
+
+/* Pointers
+ *****************************************/
+.pointer-top,
+.pointer-right,
+.pointer-bottom,
+.pointer-left {
+    &:before,
+    &:after {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-color: transparent;
+        border-width: @grid / 2;
+        display: block;
+    }
+}
+
+.pointer-top,
+.pointer-left {
+    &:before {
+        content: "";
+    }
+}
+
+.pointer-bottom,
+.pointer-right {
+    &:after {
+        content: "";
+    }
+}
+
+
+.pointer-top,
+.pointer-bottom {
+    &:after {
+        margin: auto;
+    }
+}
+
+
+.pointer-left,
+.pointer-right {
+    display: table;
+    &:after {
+        display: table-cell;
+        vertical-align: center;
+    }
+}
+
+.pointer-top {
+    &:before {
+        border-bottom-color: inherit;
+        border-bottom-width: @gutter;
+        border-top-width: 0;
+        margin-top: -@gutter;
+    }
+}
+.pointer-right {
+    &:after {
+        border-left-color: inherit;
+        border-left-width: @gutter;
+        border-right-width: 0;
+        margin-right: -@gutter;
+        float: right;
+    }
+}
+.pointer-bottom {
+    position: relative;
+    &:after {
+        border-top-color: inherit;
+        border-top-width: @gutter;
+        border-bottom-width: 0;
+        bottom: -@gutter;
+        position: absolute;
+    }
+}
+.pointer-left {
+    &:before {
+        border-right-color: inherit;
+        border-right-width: @gutter;
+        border-left-width: 0;
+        margin-left: -@gutter;
+        float: left;
+    }
+}
+
+.box-shadow(@style, @c, @set: true) when (@set), (iscolor(@c)) {
+    box-shadow:         @style @c;
+    -webkit-box-shadow: @style @c;
+    -moz-box-shadow:    @style @c;
+}
+.box-shadow(@style, @c, @set: true) when not (@set), (iscolor(@c)) {
+    box-shadow:         @style @c @set;
+    -webkit-box-shadow: @style @c @set;
+    -moz-box-shadow:    @style @c @set;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+    .box-shadow(@style, rgba(0, 0, 0, @alpha), @set);
+}
+
+.border-box() {
+    .box-sizing(border-box);
+}

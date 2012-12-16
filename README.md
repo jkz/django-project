@@ -1,4 +1,4 @@
-django-boilerplate
-==================
+A barebone django project.
 
-A barebone django project
+ISSUES:
+bin/bootstrap.py gives error on pipbuild

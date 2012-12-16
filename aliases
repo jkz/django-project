@@ -1,0 +1,92 @@
+export ROOT="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export NAME="${ROOT##*/}"
+export BIN="$ROOT/bin"
+export LOCAL="$ROOT/local"
+export LOG="$LOCAL/log"
+export VENV="$LOCAL/venv"
+
+#export DJANGO_SETTINGS_MODULE="$NAME.conf.settings"
+
+#
+# Heads up!
+#
+# Indented aliases are dangerous operations and are disabled by default.
+# They are enabled for 'dev' and 'test' environments.
+#
+
+alias aliases="source $ROOT/aliases"
+
+# Env Commands
+alias envon="source $LOCAL/venv/bin/activate"
+alias envoff="deactivate"
+
+# Virutalenv
+alias project="cd $ROOT"
+
+# Pip
+alias pipbuild="pip install -r $ROOT/requirements.pip"
+alias pipfreeze="pip freeze > $ROOT/requirements.pip"
+
+# Manage
+export MANAGE="$VENV/bin/python $ROOT/manage.py"
+alias manage="$MANAGE"
+
+alias run='manage runserver'
+alias tests='manage test'
+alias shell='manage shell'
+alias populate='manage populate'
+alias db='manage dbshell'
+	alias syncdb='manage syncdb'
+	alias syncdbinit='manage loaddata initial_data'
+
+# Scripts
+alias bootstrap='$BIN/bootstrap.py'
+alias clean='sh $BIN/clean.sh'
+alias less2css='sh $BIN/less2css.sh'
+alias sphinx='sh $BIN/sphinx.sh'
+	alias djreset='sh $BIN/django_reset.sh'
+	alias dbreset='sh $BIN/psql_reset.sh; djreset'
+
+# Logs
+alias errlog='tail $LOG/error.log'
+alias errlogfull='vim $LOG/error.log'
+alias acclog='tail $LOG/access.log'
+alias acclogfull='vim $LOG/access.log'
+
+# Celery
+CELERY="$ROOT/celery/"
+if test -f "$CELERY/celeryrc"; then
+    . "$CELERY/celeryrc"
+else
+    unset CELERY
+fi
+
+# RabbitMQ
+alias rabbitmqsetup="$BIN/local.rabbitmq_setup.sh"
+alias rabbgstart="sudo /etc/init.d/rabbitmq-server start"
+alias rabbgstop="sudo /etc/init.d/rabbitmq-server stop"
+alias rabmqstart="sudo rabbitmq-server"
+alias rabmqstartd="jtqrabmqstart -detached"
+alias rabmqstop="sudo rabbitmqctl stop"
+
+if test -d "$LOCAL"; then
+    ENV=`cat $LOCAL/ENV`
+    # Unset Descructive commands
+    if [[ "$ENV" != "dev" && "$ENV" != "test" ]]; then
+            unalias syncdb
+            unalias syncdbinit
+            unalias dbreset
+            unalias djreset
+    else
+        alias apare="sudo apache2ctl stop; sudo apache2ctl start"
+        alias launch="apare; celerydd;"
+        alias relaunch="dbreset; populate; launch"
+        alias prelaunch="bootstrap; syncdb; relaunch"
+    fi
+    # Activate env
+    envon
+    echo "Working on $NAME :: $ENV@$NAME"
+else
+    echo "Working on $NAME :: no venv"
+fi
+

@@ -1,0 +1,3 @@
+Make sure to install a mail server, for instance:
+
+sudo apt-get install postfix
