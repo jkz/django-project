@@ -68,7 +68,7 @@ def main():
     os.chdir(ROOT)
 
     print 'pip install -r requirements.pip', envdir
-    subprocess.call(['pip', 'install', '-r', os.path.join([ROOT.encode(), 'requirements.pip'])])
+    subprocess.call(['pip', 'install', '-r', os.path.join(ROOT.encode(), 'requirements.pip')])
 
 
 if __name__ == '__main__':
