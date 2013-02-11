@@ -8,6 +8,7 @@ argparse==1.2.1
 wsgiref==0.1.2
 python-dateutil==2.1
 
+South
 #fabric==1.5.0
 #django-celery
 ipython

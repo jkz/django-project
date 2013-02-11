@@ -28,8 +28,8 @@ def main():
     try_mkdir('log')
     print 'mkdir -p cache/egg'
     try_mkdir('cache/egg')
-    print 'mkdir shared'
-    try_mkdir('shared')
+    print 'mkdir share'
+    try_mkdir('share')
     print 'mkdir celery'
     try_mkdir('celery')
 
@@ -40,14 +40,17 @@ def main():
     subprocess.call(['virtualenv', ENV])
 
     activate = os.path.join(ENV, 'bin', 'activate')
-    print activate
-    subprocess.call([activate])
+    print 'cat', activate
+    subprocess.call(['cat', activate])
+    print 'source', activate
+    subprocess.call(['source', activate], shell=True)
 
     print 'cd ..'
     os.chdir(ROOT)
 
     print 'pip install -r requirements.pip'
-    subprocess.call(['pip', 'install', '-r', os.path.join(ROOT.encode(), 'requirements.pip')])
+    pip = os.path.join(ENV, 'bin', 'pip')
+    subprocess.call([pip, 'install', '-r', os.path.join(ROOT.encode(), 'requirements.pip')])
 
 
 if __name__ == '__main__':

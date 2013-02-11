@@ -2,7 +2,7 @@ import site
 import path
 
 PATH = path.path(__file__).parent.parent
-LOCAL = PATH / '..' / 'local'
+LOCAL = PATH.parent.parent / 'local'
 
 site.addsitedir(PATH)
 
@@ -12,7 +12,7 @@ PACKAGES = (
 )
 
 for package in PACKAGES:
-    if path.isdir(PATH / package):
+    if path.path(PATH / package).isdir():
         site.addsitedir(PATH / package)
 
 DEBUG = False
