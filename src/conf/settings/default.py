@@ -1,46 +1,29 @@
 import site
 import path
 
-# Celery init
-import djcelery
-djcelery.setup_loader()
+PATH = path.path(__file__).parent.parent
+LOCAL = PATH / '..' / 'local'
 
-PROJECT_PATH = path.path(__file__).parent.parent
-PROJECT_LOCAL = PROJECT_PATH.parent / 'local'
-
-# Django settings for jtg project.
-
-PROJECT_DOMAIN = ''
-PROJECT_URL = PROJECT_DOMAIN
-SESSION_COOKIE_DOMAIN = ''
-#CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
-
-site.addsitedir(PROJECT_PATH)
+site.addsitedir(PATH)
 
 PACKAGES = (
     'apps',
-    'conf',
+    'libs',
 )
 
 for package in PACKAGES:
-    site.addsitedir(PROJECT_PATH / package)
-
-SHARED_ENV = PROJECT_LOCAL / 'shared'
-
-SHARED_PACKAGES = (
-)
-
-site.addsitedir(SHARED_ENV)
-for env in path.listdir(SHARED_ENV):
-    site.addsitedir(SHARED_ENV / env)
-
-for package in SHARED_PACKAGES:
-    site.addsitedir(SHARED_ENV / package)
-
+    if path.isdir(PATH / package):
+        site.addsitedir(PATH / package)
 
 DEBUG = False
 VERBOSE = False
 TEMPLATE_DEBUG = DEBUG
+
+SESSION = True
+CELERY = False
+CACHE = False
+
+USE_I18N = False
 
 ADMINS = (
      ('Jesse Zwaan', 'j.k.zwaan@gmail.com'),
@@ -50,6 +33,7 @@ MANAGERS = ADMINS
 
 from fnmatch import fnmatch
 class glob_list(list):
+    """Allows wildcards in ip addresses"""
     def __contains__(self, key):
         for elt in self:
             if fnmatch(key, elt): return True
@@ -61,67 +45,77 @@ INTERNAL_IPS = glob_list([
 
 LANGUAGE_CODE = 'en-us'
 
-USE_I18N = False
+STATIC_URL = '/static'
+STATIC_ROOT = LOCAL / 'static'
 
-MEDIA_ROOT = PROJECT_PATH / 'media'
-
-STATIC_URL = ''
-IMAGES_URL = '%s/img/' % STATIC_URL
-
-MEDIA_URL = '/assets/' # 'http://static.%s/' % PROJECT_URL
-
-MIDDLEWARE_CLASSES = (
-    #'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    #'django.middleware.cache.FetchFromCacheMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-
-)
+MEDIA_URL = '/assets'
+MEDIA_ROOT = LOCAL / 'media'
 
 ROOT_URLCONF = 'conf.urls'
 
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+)
+
 TEMPLATE_DIRS = (
-    PROJECT_PATH / 'templates',
+    PATH / 'templates',
 )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.webdesign',
 
-    # Uncomment for celery
-    #'djcelery',
-    #'kombu.transport.django',
-
+    'south',
 )
-
-LOGIN_URL = ''
-LOGIN_REDIRECT_URL = ''
-LOGIN_ERROR_URL = ''
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.ModelBackend',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.contrib.messages.context_processors.messages",
-
-    "context_processors.static"
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += (
+    "conf.context_processors.static",
 )
 
-#SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+if CACHE:
+    common = 'django.middleware.common.CommonMiddleware'
+    update = 'django.middleware.cache.UpdateCacheMiddleware'
+    fetch = 'django.middleware.cache.FetchFromCacheMiddleware'
+    try:
+        index = tup.index(common)
+    except ValueError:
+        MIDDLEWARE_CLASSES = (update, fetch) + MIDDLEWARE_CLASSES
+    else:
+        MIDDLEWARE_CLASSES = (update, common, fetch) + MIDDLEWARE_CLASSES[:index] + MIDDLEWARE_CLASSES[index + 1:]
 
-CELERY_IMPORTS = [
-]
 
+if SESSION:
+    SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+    INSTALLED_APPS += (
+        'django.contrib.sessions',
+    )
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+    )
+
+
+
+if CELERY:
+    INSTALLED_APPS += (
+        'djcelery',
+        'kombu.transport.django',
+    )
+
+    CELERY_IMPORTS = [
+        'myapp.tasks',
+    ]
+
+    import djcelery
+    djcelery.setup_loader()

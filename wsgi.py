@@ -1,23 +1,24 @@
 import os
 import site
 
-PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__)
-PROJECT_PATH = os.path.join(PROJECT_ROOT, 'src')
-PROJECT_LOCAL = os.path.join(PROJECT_ROOT, 'local')
-SHARED_ENV = os.path.join(PROJECT_LOCAL, 'shared')
-PYTHON_DIR = os.path.join(PROJECT_LOCAL, 'venv', 'lib', 'python2.7')
+sys.stdout = sys.stderr
 
-site.addsitedir(os.path.join(PYTHON_DIR, 'site-packages'))
-site.addsitedir(PROJECT_ROOT)
-site.addsitedir(PROJECT_PATH)
-site.addsitedir(SHARED_ENV)
+ROOT = os.path.dirname(os.path.realpath(__file__)
+SOURCE = os.path.join(ROOT, 'src')
+LOCAL = os.path.join(ROOT, 'local')
+SHARE = os.path.join(LOCAL, 'share')
+SITE_PACKAGES = os.path.join(LOCAL, 'venv', 'lib', 'python2.7', 'site-packages')
 
-for path in os.listdir(SHARED_ENV):
-    PATH = os.path.join(SHARED_ENV, path)
+site.addsitedir(SITE_PACKAGES)
+site.addsitedir(SOURCE)
+site.addsitedir(SHARE)
+
+for path in os.listdir(SHARE):
+    PATH = os.path.join(SHARE, path)
     if os.path.isdir(PATH):
         site.addsitedir(PATH)
 
-os.environ.setdefault('PYTHON_EGG_CACHE', os.path.join(PROJECT_LOCAL, 'cache', 'egg')
+os.environ.setdefault('PYTHON_EGG_CACHE', os.path.join(LOCAL, 'cache', 'egg')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings')
 
 from django.core.wsgi import get_wsgi_application
