@@ -5,7 +5,6 @@ import sys
 import subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-NAME = os.path.split(ROOT)[1]
 
 def try_mkdir(path):
     try:
@@ -15,7 +14,7 @@ def try_mkdir(path):
 
 def main():
     try:
-        LOCAL = sys.argv[1]
+        LOCAL = os.path.realpath(sys.argv[1])
     except IndexError:
         LOCAL = os.path.join(ROOT, 'local')
 
