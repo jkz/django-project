@@ -33,8 +33,8 @@ def main():
     try_mkdir('log')
     print 'mkdir -p cache/egg'
     try_mkdir('cache/egg')
-    print 'mkdir shared_env'
-    try_mkdir('shared_env')
+    print 'mkdir shared'
+    try_mkdir('shared')
     print 'mkdir celery'
     try_mkdir('celery')
 
@@ -45,15 +45,6 @@ def main():
     print 'virtualenv', envdir
     subprocess.call(['virtualenv', envdir])
 
-    venvrc = os.path.join(LOCAL, 'venvrc.sh')
-    if not os.path.exists(venvrc):
-        subprocess.call(['touch', venvrc])
-
-    pathcommand = '\n# Put your startup script in here\nsource %s' % venvrc
-    envactivate = os.path.join(envdir, 'bin', 'activate')
-    with open(envactivate, 'a') as f:
-        f.write(pathcommand)
-
     try:
         print 'ln -s %s venv' % os.path.join(envdir)
         os.symlink(envdir, 'venv')
@@ -63,6 +54,8 @@ def main():
 
     with open('ENV', 'w') as f:
         f.write(env)
+
+    subprocess.call([os.path.join(envdir, 'bin', 'activate')])
 
     print 'cd ..'
     os.chdir(ROOT)
