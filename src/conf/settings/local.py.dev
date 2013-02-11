@@ -1,0 +1,25 @@
+from .default import *
+
+DEBUG = True
+VERBOSE = True
+
+DOMAIN = ''
+SESSION_COOKIE_DOMAIN = '*.' + DOMAIN
+CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
+
+DATABASES = {
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': LOCAL / 'data.sqlite3',
+    }
+}
+
+GOOGLE_ANALYTICS = False

@@ -1,0 +1,22 @@
+from .default import *
+
+DEBUG = False
+VERBOSE = False
+
+DOMAIN = ''
+SESSION_COOKIE_DOMAIN = '*.' + DOMAIN
+CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'name',
+        'USER': 'user',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+GOOGLE_ANALYTICS = True
+GOOGLE_SITE_ID = 'UA-XXXXXXXX-1'

@@ -7,7 +7,7 @@ doc/build*
 dumps*
 
 local
-local.*
+local.py
 
 *.old
 *.bkp
