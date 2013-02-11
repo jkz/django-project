@@ -8,7 +8,6 @@ dumps*
 
 local
 local.*
-src*
 
 *.old
 *.bkp

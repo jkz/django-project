@@ -7,7 +7,6 @@ import djcelery
 djcelery.setup_loader()
 
 PROJECT_PATH = path.path(__file__).parent.parent
-PROJECT_NAME = PROJECT_PATH.name
 PROJECT_LOCAL = PROJECT_PATH.parent / 'local'
 
 # Django settings for jtg project.
@@ -26,7 +25,7 @@ PACKAGES = (
 for package in PACKAGES:
     sys.path.append(PROJECT_PATH / package)
 
-SHARED_ENV = PROJECT_LOCAL / 'shared_env'
+SHARED_ENV = PROJECT_LOCAL / 'shared'
 
 SHARED_PACKAGES = (
 )
@@ -82,7 +81,7 @@ MIDDLEWARE_CLASSES = (
 
 )
 
-ROOT_URLCONF = '%s.conf.urls' % PROJECT_NAME
+ROOT_URLCONF = 'conf.urls'
 
 TEMPLATE_DIRS = (
     PROJECT_PATH / 'templates',
@@ -96,8 +95,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.webdesign',
-
-    PROJECT_NAME,
 
     'djcelery',
     'kombu.transport.django',
@@ -119,7 +116,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
 
-    "%s.context_processors.static" % PROJECT_NAME,
+    "context_processors.static"
 )
 
 #SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

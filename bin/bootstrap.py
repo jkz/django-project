@@ -20,7 +20,7 @@ def main():
     try:
         env = sys.argv[1]
     except IndexError:
-        exit("Usage: python bootstrap.py <stage>")
+        exit("Usage: python bootstrap.py <name>")
 
     print 'cd %s' % ROOT
     os.chdir(ROOT)
