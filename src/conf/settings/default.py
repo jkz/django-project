@@ -1,5 +1,4 @@
-import os
-import sys
+import site
 import path
 
 # Celery init
@@ -16,26 +15,27 @@ PROJECT_URL = PROJECT_DOMAIN
 SESSION_COOKIE_DOMAIN = ''
 #CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
 
-sys.path.append(PROJECT_PATH)
+site.addsitedir(PROJECT_PATH)
+
 PACKAGES = (
     'apps',
     'conf',
 )
 
 for package in PACKAGES:
-    sys.path.append(PROJECT_PATH / package)
+    site.addsitedir(PROJECT_PATH / package)
 
 SHARED_ENV = PROJECT_LOCAL / 'shared'
 
 SHARED_PACKAGES = (
 )
 
-sys.path.append(SHARED_ENV)
-for env in os.listdir(SHARED_ENV):
-    sys.path.append(SHARED_ENV / env)
+site.addsitedir(SHARED_ENV)
+for env in path.listdir(SHARED_ENV):
+    site.addsitedir(SHARED_ENV / env)
 
 for package in SHARED_PACKAGES:
-    sys.path.append(SHARED_ENV / package)
+    site.addsitedir(SHARED_ENV / package)
 
 
 DEBUG = False
@@ -96,8 +96,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.webdesign',
 
-    'djcelery',
-    'kombu.transport.django',
+    # Uncomment for celery
+    #'djcelery',
+    #'kombu.transport.django',
 
 )
 
