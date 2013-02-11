@@ -7,8 +7,9 @@ psycopg2==2.4.5
 argparse==1.2.1
 wsgiref==0.1.2
 python-dateutil==2.1
-fabric==1.5.0
-django-celery
+
+#fabric==1.5.0
+#django-celery
 ipython
 
 -e git+https://github.com/jaraco/path.py#egg=path
