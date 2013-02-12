@@ -53,6 +53,8 @@ MEDIA_ROOT = LOCAL / 'media'
 
 ROOT_URLCONF = 'conf.urls'
 
+WSGI_APPLICATION = 'entry.application'
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
