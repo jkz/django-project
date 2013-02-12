@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 
-ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 def try_mkdir(path):
     try:
@@ -30,8 +30,6 @@ def main():
     try_mkdir('cache/egg')
     print 'mkdir share'
     try_mkdir('share')
-    print 'mkdir celery'
-    try_mkdir('celery')
 
     # Create the virtualenv with virtualenvwrapper
     ENV = os.path.join(LOCAL, 'venv')
@@ -40,8 +38,6 @@ def main():
     subprocess.call(['virtualenv', ENV])
 
     activate = os.path.join(ENV, 'bin', 'activate')
-    print 'cat', activate
-    subprocess.call(['cat', activate])
     print 'source', activate
     subprocess.call(['source', activate], shell=True)
 

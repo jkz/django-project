@@ -1,4 +1,0 @@
-export CELERY_DEFAULTS="$CELERY/celeryd"
-export DEFAULT_CELERYBEAT="source $CELERY/celerybeat; "
-
-alias celerydd='manage celeryd -E -B --loglevel=info'

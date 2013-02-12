@@ -1,3 +1,8 @@
+"""
+This python script is the combined entry point for the Django project. It
+sets up the PYTHONPATH relative to its location. When invoked from the
+command line, it behaves as manage.py, otherwise as wsgi.py.
+"""
 import os
 import sys
 import site

@@ -1,10 +1,10 @@
 import site
 import path
 
-PATH = path.path(__file__).parent.parent
-LOCAL = PATH.parent.parent / 'local'
+ROOT = path.path(__file__).parent.parent.parent
+LOCAL = ROOT.parent / 'local'
 
-site.addsitedir(PATH)
+site.addsitedir(ROOT)
 
 PACKAGES = (
     'apps',
@@ -12,8 +12,8 @@ PACKAGES = (
 )
 
 for package in PACKAGES:
-    if path.path(PATH / package).isdir():
-        site.addsitedir(PATH / package)
+    if path.path(ROOT / package).isdir():
+        site.addsitedir(ROOT / package)
 
 DEBUG = False
 VERBOSE = False
@@ -63,8 +63,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_DIRS = (
-    PATH / 'templates',
+    ROOT / 'templates',
 )
+
+print TEMPLATE_DIRS
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -75,6 +77,7 @@ INSTALLED_APPS = (
     'django.contrib.webdesign',
     'django.contrib.staticfiles',
 
+    'utils',
     'south',
 )
 
