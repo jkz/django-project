@@ -48,7 +48,7 @@ LANGUAGE_CODE = 'en-us'
 STATIC_URL = '/static'
 STATIC_ROOT = LOCAL / 'static'
 
-MEDIA_URL = '/assets'
+MEDIA_URL = '/media'
 MEDIA_ROOT = LOCAL / 'media'
 
 ROOT_URLCONF = 'conf.urls'
