@@ -20,6 +20,7 @@ VERBOSE = False
 TEMPLATE_DEBUG = DEBUG
 
 SESSION = True
+SOUTH = False
 CELERY = False
 CACHE = False
 
@@ -76,7 +77,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'utils',
-    'south',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -98,6 +98,11 @@ if CACHE:
         MIDDLEWARE_CLASSES = (update, fetch) + MIDDLEWARE_CLASSES
     else:
         MIDDLEWARE_CLASSES = (update, common, fetch) + MIDDLEWARE_CLASSES[:index] + MIDDLEWARE_CLASSES[index + 1:]
+
+if SOUTH:
+    INSTALLED_APPS += (
+        'south',
+    )
 
 
 if SESSION:
