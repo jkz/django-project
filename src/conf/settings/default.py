@@ -49,6 +49,10 @@ LANGUAGE_CODE = 'en-us'
 STATIC_URL = '/static'
 STATIC_ROOT = LOCAL / 'static'
 
+STATICFILES_DIRS = (
+    SOURCE / 'assets',
+)
+
 MEDIA_URL = '/media'
 MEDIA_ROOT = LOCAL / 'media'
 
