@@ -1,10 +1,10 @@
 import site
 import path
 
-ROOT = path.path(__file__).parent.parent.parent
-LOCAL = ROOT.parent / 'local'
+SOURCE = path.path(__file__).parent.parent.parent
+LOCAL = SOURCE.parent / 'local'
 
-site.addsitedir(ROOT)
+site.addsitedir(SOURCE)
 
 PACKAGES = (
     'apps',
@@ -12,8 +12,8 @@ PACKAGES = (
 )
 
 for package in PACKAGES:
-    if path.path(ROOT / package).isdir():
-        site.addsitedir(ROOT / package)
+    if path.path(SOURCE / package).isdir():
+        site.addsitedir(SOURCE / package)
 
 DEBUG = False
 VERBOSE = False
@@ -68,7 +68,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_DIRS = (
-    ROOT / 'templates',
+    SOURCE / 'templates',
 )
 
 INSTALLED_APPS = (
