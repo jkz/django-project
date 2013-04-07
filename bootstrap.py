@@ -18,6 +18,9 @@ def main():
     except IndexError:
         LOCAL = os.path.join(ROOT, 'local')
 
+    #TODO: make this an argument
+    env = 'dev'
+
     print 'cd %s' % ROOT
     os.chdir(ROOT)
     print 'mkdir local'
@@ -47,6 +50,15 @@ def main():
     print 'pip install -r requirements.pip'
     pip = os.path.join(ENV, 'bin', 'pip')
     subprocess.call([pip, 'install', '-r', os.path.join(ROOT.encode(), 'requirements.pip')])
+
+
+    settings_path = os.chdir(os.path.join('src', 'conf', 'settings')
+    print 'cd', settings_path
+    os.chdir(settings_path)
+
+    settings_template = 'local.py.%s' % env
+    print 'cp', settings_template, 'local.py'
+    subprocess.call(['cp', settings_template, 'local.py'])
 
 
 if __name__ == '__main__':
