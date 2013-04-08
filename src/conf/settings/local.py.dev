@@ -18,7 +18,7 @@ DATABASES = {
     },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': LOCAL / 'data' / 'db',
+        'NAME': LOCAL / 'sqlite3' / 'db',
     }
 }
 
