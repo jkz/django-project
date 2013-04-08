@@ -16,10 +16,12 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
-    'default': {
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': LOCAL / 'data.sqlite3',
+        'NAME': LOCAL / 'data' / 'db',
     }
 }
+
+DATABASES['default'] = DATABASES['sqlite']
 
 GOOGLE_ANALYTICS = False
