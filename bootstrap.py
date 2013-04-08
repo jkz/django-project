@@ -52,7 +52,7 @@ def main():
     subprocess.call([pip, 'install', '-r', os.path.join(ROOT.encode(), 'requirements.pip')])
 
 
-    settings_path = os.chdir(os.path.join('src', 'conf', 'settings')
+    settings_path = os.path.join('src', 'conf', 'settings')
     print 'cd', settings_path
     os.chdir(settings_path)
 
