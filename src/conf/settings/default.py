@@ -19,12 +19,13 @@ DEBUG = False
 VERBOSE = False
 TEMPLATE_DEBUG = DEBUG
 
-SESSION = True
-SOUTH = False
-CELERY = False
-CACHE = False
-
 USE_I18N = False
+USE_L10N = True
+USE_SESSION = True
+USE_CACHE = False
+USE_SOUTH = False
+USE_CELERY = False
+
 
 ADMINS = (
      ('Jesse Zwaan', 'j.k.zwaan@gmail.com'),
@@ -92,7 +93,9 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "conf.context_processors.static",
 )
 
-if CACHE:
+
+
+if USE_CACHE:
     common = 'django.middleware.common.CommonMiddleware'
     update = 'django.middleware.cache.UpdateCacheMiddleware'
     fetch = 'django.middleware.cache.FetchFromCacheMiddleware'
@@ -103,13 +106,13 @@ if CACHE:
     else:
         MIDDLEWARE_CLASSES = (update, common, fetch) + MIDDLEWARE_CLASSES[:index] + MIDDLEWARE_CLASSES[index + 1:]
 
-if SOUTH:
+if USE_SOUTH:
     INSTALLED_APPS += (
         'south',
     )
 
 
-if SESSION:
+if USE_SESSION:
     SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
     INSTALLED_APPS += (
         'django.contrib.sessions',
@@ -120,7 +123,7 @@ if SESSION:
 
 
 
-if CELERY:
+if USE_CELERY:
     INSTALLED_APPS += (
         'djcelery',
         'kombu.transport.django',
