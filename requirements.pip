@@ -1,4 +1,4 @@
-Django==1.4.1
+Django
 python-memcached==1.48
 
 # Requires postgresql stuff:
