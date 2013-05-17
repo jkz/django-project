@@ -47,14 +47,14 @@ INTERNAL_IPS = glob_list([
 
 LANGUAGE_CODE = 'en-us'
 
-STATIC_URL = '/static'
+STATIC_URL = '/static/'
 STATIC_ROOT = LOCAL / 'static'
 
 STATICFILES_DIRS = (
     SOURCE / 'assets',
 )
 
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = LOCAL / 'media'
 
 ROOT_URLCONF = 'conf.urls'
@@ -100,7 +100,7 @@ if USE_CACHE:
     update = 'django.middleware.cache.UpdateCacheMiddleware'
     fetch = 'django.middleware.cache.FetchFromCacheMiddleware'
     try:
-        index = tup.index(common)
+        index = MIDDLEWARE_CLASSES.index(common)
     except ValueError:
         MIDDLEWARE_CLASSES = (update, fetch) + MIDDLEWARE_CLASSES
     else:

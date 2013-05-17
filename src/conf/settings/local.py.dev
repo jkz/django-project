@@ -7,7 +7,7 @@ DOMAIN = ''
 SESSION_COOKIE_DOMAIN = '*.' + DOMAIN
 CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
 
-SECRET_KEY = 'Please change me if you're not on dev! :)'
+SECRET_KEY = 'Please change me if you are not on dev! :)'
 
 DATABASES = {
     'postgres': {
@@ -20,7 +20,7 @@ DATABASES = {
     },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': LOCAL / 'sqlite3' / 'db',
+        'NAME': LOCAL / 'data' / 'sqlite3',
     }
 }
 

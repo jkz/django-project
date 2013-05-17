@@ -9,7 +9,7 @@ DOMAIN = ''
 SESSION_COOKIE_DOMAIN = '*.' + DOMAIN
 CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
 
-#TODO: move this sensitive information to the secret folder
+#TODO move this sensitive information to the secret folder
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
