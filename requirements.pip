@@ -3,7 +3,7 @@ python-memcached==1.48
 
 # Requires postgresql stuff:
 # $ sudo apt-get install libpq-dev python-dev
-psycopg2==2.4.5
+#psycopg2==2.4.5
 argparse==1.2.1
 wsgiref==0.1.2
 python-dateutil==2.1
