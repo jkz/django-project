@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -28,7 +28,7 @@ def main():
     print('cd local')
     os.chdir(LOCAL)
     print('mkdir data')
-    try_mkdir('data', 0777)
+    try_mkdir('data')
     print('mkdir log')
     try_mkdir('log')
     print('mkdir -p cache/egg')
@@ -39,19 +39,33 @@ def main():
     # Create the virtualenv with virtualenvwrapper
     ENV = os.path.join(LOCAL, 'venv')
 
-    print('virtualenv', ENV)
-    subprocess.call(['virtualenv', ENV])
+    python = os.path.normpath(sys.executable)
+    print('virtualenv', '-p', python, ENV)
+    subprocess.call(['virtualenv', '-p', python, ENV])
 
-    activate = os.path.join(ENV, 'bin', 'activate')
-    print('source', activate)
-    subprocess.call(['source', activate], shell=True)
+    activate_script = os.path.join(LOCAL, '__activator_script')
+
+    print('create', activate_script)
+    with open(activate_script, 'w') as handle:
+        handle.write(". {}".format(activate_script))
+
+    #os.system('/bin/bash --rcfile /path/to/myscript.sh')
+    print('bash', activate_script)
+    subprocess.call(['bash', activate_script], shell=True)
+
+    os.remove(activate_script)
+
+
+    #activate = os.path.join(ENV, 'bin', 'activate')
+    #print('source', activate)
+    #subprocess.call(['source', activate], shell=True)
 
     print('cd ..')
     os.chdir(ROOT)
 
     print('pip install -r requirements.pip')
     pip = os.path.join(ENV, 'bin', 'pip')
-    subprocess.call([pip, 'install', '-r', os.path.join(ROOT.encode(), 'requirements.pip')])
+    subprocess.call([pip, 'install', '-r', os.path.join(ROOT, 'requirements.pip')])
 
 
     settings_path = os.path.join('src', 'conf', 'settings')
