@@ -6,15 +6,6 @@ LOCAL = SOURCE.parent / 'local'
 
 site.addsitedir(SOURCE)
 
-PACKAGES = (
-    'apps',
-    'libs',
-)
-
-for package in PACKAGES:
-    if path.path(SOURCE / package).isdir():
-        site.addsitedir(SOURCE / package)
-
 DEBUG = False
 VERBOSE = False
 TEMPLATE_DEBUG = DEBUG
