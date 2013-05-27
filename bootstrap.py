@@ -40,9 +40,10 @@ BANNERS = {
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-e", "--environtment", default='dev',
-            choices=['dev', 'prod', 'test', 'stage'], help="set deploy environment")
-    parser.add_argument("-v", "--verbosity", help="increase output verbosity")
+    parser.add_argument("--env", default='dev',
+            choices=['dev', 'prod'], help="set deploy environment")
+    parser.add_argument("-v", "--verbosity", help="increase output verbosity",
+            action="store_true")
     parser.add_argument("-l", "--local", help="set local directory location")
     args = parser.parse_args()
     if args.local:
@@ -50,7 +51,6 @@ def main():
     else:
         LOCAL = os.path.join(ROOT, 'local')
 
-    #TODO: make this an argument
     env = getattr(args, 'env', 'dev')
     for line in zip(BANNERS['project'], BANNERS[env]):
         print(line[0]+line[1])
@@ -63,7 +63,7 @@ def main():
     try_mkdir('cache/egg')
     try_mkdir('share')
 
-    print(\
+    print(
 """
 Create directory tree.
 
@@ -86,6 +86,8 @@ Create directory tree.
 
     if subprocess.call(['virtualenv', '-p', python, ENV]):
         raise Exception("virtualenv failed")
+
+    print()
 
     site_packages = os.path.join(ENV, 'lib',
             'python{}.{}'.format(*sys.version_info[:2]), 'site-packages')
