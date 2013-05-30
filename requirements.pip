@@ -1,16 +1,18 @@
 Django
-python-memcached==1.48
+#python-memcached==1.48
+#python3-memcached
+#setuptools
 
 # Requires postgresql stuff:
 # $ sudo apt-get install libpq-dev python-dev
-psycopg2==2.4.5
-argparse==1.2.1
-wsgiref==0.1.2
-python-dateutil==2.1
+#psycopg2==2.4.5
+#argparse==1.2.1
+#wsgiref==0.1.2
+#python-dateutil==2.1
 
 #South
 #fabric==1.5.0
 #django-celery
-ipython
+#ipython
 
--e git+https://github.com/jaraco/path.py#egg=path
+-e git+https://github.com/jessethegame/path.py#egg=path

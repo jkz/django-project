@@ -48,14 +48,14 @@ INTERNAL_IPS = glob_list([
 LANGUAGE_CODE = 'en-us'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = LOCAL / 'static'
+STATIC_ROOT = LOCAL / 'data' / 'static'
 
 STATICFILES_DIRS = (
     SOURCE / 'assets',
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = LOCAL / 'media'
+MEDIA_ROOT = LOCAL / 'data' / 'media'
 
 ROOT_URLCONF = 'conf.urls'
 

@@ -15,11 +15,6 @@ Run the portable bootstrap script:
 
     ./bootstrap.py
 
-Add shared python and django packages and modules:
+Add shared python and django packages and modules by symlinking to their
+containing folders in `local/share`.
 
-    cd local/share
-    ln -s ~/django/share django
-    ln -s ~/python/share python
-
-Currently, there are some dependencies resolved by this. In future, when
-the apps are more fleshed out, they'll be included in requirements.pip
