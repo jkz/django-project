@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -39,8 +39,9 @@ def main():
     # Create the virtualenv with virtualenvwrapper
     ENV = os.path.join(LOCAL, 'venv')
 
-    print('virtualenv', ENV)
-    subprocess.call(['virtualenv', ENV])
+    python = os.path.normpath(sys.executable)
+    print('virtualenv', '-p', python, ENV)
+    subprocess.call(['virtualenv', '-p', python, ENV])
 
     activate = os.path.join(ENV, 'bin', 'activate')
     print('source', activate)
