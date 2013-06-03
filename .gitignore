@@ -15,3 +15,5 @@ local.py
 
 celerybeat-schedule
 celeryev.pid
+
+requirements.txt

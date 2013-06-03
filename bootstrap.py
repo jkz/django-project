@@ -29,6 +29,12 @@ BANNERS = {
         "   / __  / _ \ | / /",
         " _/ /_/ /  __/ |/ / ",
         "(_)__,_/\___/|___/  "),
+    'test': (
+        "     __            __ "
+        "    / /____  _____/ /_"
+        "   / __/ _ \/ ___/ __/"
+        " _/ /_/  __(__  ) /_  "
+        "(_)__/\___/____/\__/  "),
     'prod': (
         "                           __",
         "     ____  _________  ____/ /",
@@ -42,7 +48,7 @@ BANNERS = {
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--env", default='dev',
-            choices=['dev', 'prod'], help="set deploy environment")
+            choices=['dev', 'test', 'prod'], help="set deploy environment")
     parser.add_argument("-v", "--verbosity", help="increase output verbosity",
             action="store_true")
     parser.add_argument("-l", "--local", help="set local directory location")
@@ -100,13 +106,18 @@ def main():
     print('cd ..')
     os.chdir(ROOT)
 
-    print('pip install -r requirements.pip')
+    req = '-r requirements/{}.pip'.format(env)
+    print("echo '{}' > 'requirements.txt".format(req))
+    with open('requirements.txt', 'w') as handle:
+        handle.write(req)
+
+    print('pip install -r requirements.txt')
     p = subprocess.call([
         os.path.join(ENV, 'bin', 'pip'), 'install',
         '--log', os.path.join(LOCAL, 'log', 'bootstrap.log'),
         '--verbose',
         #'--environment', ENV,
-        '-r', os.path.join(ROOT, 'requirements.pip'),
+        '-r', os.path.join(ROOT, 'requirements.txt'),
     ])
 
     settings_path = os.path.join('src', 'conf', 'settings')
