@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -63,18 +64,17 @@ def main():
     try_mkdir('cache/egg')
     try_mkdir('share')
 
-    print(
-"""
-Create directory tree.
+    print("""
+        Create directory tree
 
-    local
-    ├── cache
-    │   └── egg
-    ├── data
-    ├── log
-    ├── share
-    └── venv
-""")
+        local
+        ├── cache
+        │   └── egg
+        ├── data
+        ├── log
+        ├── share
+        └── venv
+        """)
 
 
     # Create the virtualenv with virtualenvwrapper
@@ -91,6 +91,7 @@ Create directory tree.
 
     site_packages = os.path.join(ENV, 'lib',
             'python{}.{}'.format(*sys.version_info[:2]), 'site-packages')
+    print('symlink', site_packages)
     site_packages_link = os.path.join(LOCAL, 'share', 'site-packages')
     if not os.path.lexists(site_packages_link):
         print('ln -s', site_packages, 'local/share')
@@ -99,12 +100,6 @@ Create directory tree.
     print('cd ..')
     os.chdir(ROOT)
 
-    pip = [
-        os.path.join(ENV, 'bin', 'pip'), 'install',
-        #'--log', os.path.join(LOCAL, 'log', 'bootstrap.log'),
-        #'--environment', ENV,
-        '-r', os.path.join(ROOT, 'requirements.pip'),
-    ]
     print('pip install -r requirements.pip')
     p = subprocess.call([
         os.path.join(ENV, 'bin', 'pip'), 'install',

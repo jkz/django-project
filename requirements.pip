@@ -1,4 +1,8 @@
 Django
+
+-e git+https://github.com/jaraco/path.py.git#egg=path
+-e git+https://github.com/jessethegame/django-utils.git#egg=utils
+
 #python-memcached==1.48
 #python3-memcached
 #setuptools
@@ -15,4 +19,3 @@ Django
 #django-celery
 #ipython
 
--e git+https://github.com/jessethegame/path.py#egg=path
