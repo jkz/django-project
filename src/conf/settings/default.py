@@ -93,10 +93,9 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     "conf.context_processors.static",
 )
 
-
+common = 'django.middleware.common.CommonMiddleware'
 
 if USE_CACHE:
-    common = 'django.middleware.common.CommonMiddleware'
     update = 'django.middleware.cache.UpdateCacheMiddleware'
     fetch = 'django.middleware.cache.FetchFromCacheMiddleware'
     try:
@@ -117,10 +116,14 @@ if USE_SESSION:
     INSTALLED_APPS += (
         'django.contrib.sessions',
     )
-    MIDDLEWARE_CLASSES = (
-        'django.contrib.sessions.middleware.SessionMiddleware',
-    )
 
+    session = 'django.contrib.sessions.middleware.SessionMiddleware',
+    try:
+        index = MIDDLEWARE_CLASSES.index(common)
+    except ValueError:
+        MIDDLEWARE_CLASSES = (session,) + MIDDLEWARE_CLASSES
+    else:
+        MIDDLEWARE_CLASSES = (common, session) + MIDDLEWARE_CLASSES[:index] + MIDDLEWARE_CLASSES[index + 1:]
 
 
 if USE_CELERY:
