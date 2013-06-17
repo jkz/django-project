@@ -10,14 +10,6 @@ CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
 SECRET_KEY = 'Please change me if you are not on dev! :)'
 
 DATABASES = {
-    'postgres': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': LOCAL / 'data' / 'sqlite3',
