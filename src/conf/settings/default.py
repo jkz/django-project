@@ -117,7 +117,7 @@ if USE_SESSION:
         'django.contrib.sessions',
     )
 
-    session = 'django.contrib.sessions.middleware.SessionMiddleware',
+    session = 'django.contrib.sessions.middleware.SessionMiddleware'
     try:
         index = MIDDLEWARE_CLASSES.index(common)
     except ValueError:
